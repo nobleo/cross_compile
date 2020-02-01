@@ -1,10 +1,12 @@
-ARG OS_BASE
-FROM ${OS_BASE}
+# This Dockerfile describes a thin layer on a base OS that adds access to the ROS apt repos
 
-ARG EMU_ARCH
+ARG OS_IMAGE
+FROM ${OS_IMAGE}
+
+ARG QEMU_ARCH
 ARG ROS_VERSION
 
-COPY bin/qemu-${EMU_ARCH}-static /usr/bin/
+COPY bin/qemu-${QEMU_ARCH}-static /usr/bin/
 
 # Set timezone
 RUN echo 'Etc/UTC' > /etc/timezone && \
