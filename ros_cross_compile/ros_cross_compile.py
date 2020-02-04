@@ -105,6 +105,16 @@ def parse_args(args: List[str]) -> argparse.Namespace:
     return parser.parse_args(args)
 
 
+def cross_compile_pipeline():
+    native_base_name = build_native_base()
+    native_rosdep_name = build_native_rosdep(base_image=native_base_name)
+    rosdeps_script = collect_rosdeps(workspace, native_rosdep_name)
+
+    target_base_name = build_target_base()
+    target_sysroot_name = build_target_sysroot(target_base_name, rosdeps_script)
+    run_emulated_docker_build(workspace, )
+
+
 def main():
     """Start the cross-compilation workflow."""
     # Configuration
